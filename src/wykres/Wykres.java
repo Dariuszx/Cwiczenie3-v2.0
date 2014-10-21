@@ -1,3 +1,5 @@
+package wykres;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -5,24 +7,26 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.ApplicationFrame;
 
 import java.awt.*;
 import java.util.*;
 
-public class Wykres {
+public class Wykres extends ApplicationFrame {
 
-    public HashMap<String, Linia> tablicaLinii;
+    private HashMap<String, Linia> tablicaLinii;
     private JFreeChart wykres;
     private ChartPanel wykresPanel;
     private XYSeriesCollection kolekcjaWykresow;
+    private Dimension windowSize;
 
 
-    public Wykres() {
+    public Wykres( String title, int width, int height ) {
 
+        super( title );
         tablicaLinii = new HashMap<String, Linia>();
+        windowSize = new Dimension( width, height );
     }
 
     //dodawanie punktów
@@ -49,7 +53,7 @@ public class Wykres {
             ArrayList<Punkt> listaPunktow = entry.getValue().getPunkty();
 
             for( Punkt punkt : listaPunktow )
-                entry.getValue().add( punkt.getX(), punkt.getY() ); //dodaję punkt do linii
+                entry.getValue().add( punkt.getY(), punkt.getX() ); //dodaję punkt do linii
 
             kolekcjaWykresow.addSeries( entry.getValue() );
         }
@@ -57,7 +61,7 @@ public class Wykres {
     }
 
     //wyświetlam wykres
-    public ChartPanel stworzWykres() {
+    public void stworzWykres() {
 
         stworzZestawDanych();
 
@@ -93,9 +97,21 @@ public class Wykres {
         //Ustawienia okna
         wykresPanel = new ChartPanel( wykres );
 
-        wykresPanel.setPreferredSize(new java.awt.Dimension( 500, 270 ) );
+        wykresPanel.setPreferredSize( windowSize );
 
-        return wykresPanel;
+        setContentPane( wykresPanel );
+        setSize( windowSize );
+        setLocation();
+        setVisible( true );
+    }
+
+    private void setLocation() {
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int)(screenSize.getWidth()/2 - windowSize.width / 2);
+        int y = (int)(screenSize.getHeight()/2 - windowSize.height / 2);
+        setLocation( x, y );
+
     }
 
 }

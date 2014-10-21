@@ -1,3 +1,4 @@
+package wykres;
 
 public class Punkt {
 

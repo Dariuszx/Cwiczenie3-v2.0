@@ -1,3 +1,5 @@
+package wykres;
+
 import org.jfree.data.xy.XYSeries;
 
 import java.util.ArrayList;
