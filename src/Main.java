@@ -1,22 +1,19 @@
-import org.jfree.ui.ApplicationFrame;
+import algorytmy.InSort;
+import algorytmy.MergeSort;
+import testowanie.Testowanie;
 import wykres.Wykres;
 
 public class Main {
 
     public static void main( String[] args ) {
 
-        Wykres wykres = new Wykres( "Wykres", 800, 600 );
+        Testowanie testowanie = new Testowanie( 100, 50, 10 );
+        testowanie.dodajAlgorytm( "Sortowanie przez wstawianie", new InSort() );
+        testowanie.dodajAlgorytm( "Sortowanie przez scalanie", new MergeSort() );
 
-        wykres.addPoint(10, 20, "Przez scalanie");
-        wykres.addPoint(20, 20, "Przez scalanie");
-        wykres.addPoint(30, 20, "Przez scalanie");
-
-        wykres.addPoint(50, 20, "Przez wstawianie");
-        wykres.addPoint(60, 20, "Przez wstawianie");
-        wykres.addPoint(70, 20, "Przez wstawianie");
+        Wykres wykres = testowanie.testuj();
 
         wykres.stworzWykres();
-
 
     }
 
